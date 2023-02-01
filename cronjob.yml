@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: hello
+spec:
+  schedule: "0 0 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: hello
+            image: mongo
+            imagePullPolicy: IfNotPresent
+            command:
+            - /bin/sh
+            - -c
+            - mongosh --host "my-mongo-mongodb-0.my-mongo-mongodb-headless:27017" --authenticationDatabase admin -u root -p XlYpHz4PMi --eval "db.dropDatabase();"
+          restartPolicy: OnFailure
