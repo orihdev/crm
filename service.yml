@@ -6,10 +6,9 @@ metadata:
   name: crm-service
 spec:
   ports:
-  - nodePort: 30000
-    port: 80
+  - port: 80
     targetPort: 3000
   selector:
       app: crm
-  type: NodePort
+  type: LoadBalancer
 

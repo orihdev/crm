@@ -23,7 +23,7 @@ spec:
         - name: PERSISTENCE
           value: "true"
         - name: MONGODB_URI
-          value: mongodb://root:XlYpHz4PMi@my-mongo-mongodb-headless:27017
+          value: mongodb://root:XlYpHz4PMi@mongo-mongodb-headless:27017
         resources:
           requests:
             memory: "64Mi"

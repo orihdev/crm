@@ -1,0 +1,69 @@
+# CRM (Customer relationship management) - demo application - Additional tasks
+
+## Stage 0
+Tips:
+- Use the `diff -y` command to see what I added to these instructions.
+
+
+## Stage 1
+Goals:
+- Provision a Kubernetes cluster in the cloud (AWS EKS or GCP GKE).
+- Install an _Ingress Controller_ to your cluster (we **strongly** recommend the Nginx one), put it in its own namespace "ingress".
+- Deploy the web application - "CRM" and expose it to the internet using an Ingress _resource_.
+
+A few notes:
+- The Demo CRM is a NextJS application (a NodeJS + React app).
+- The application listens on port `3000`.
+- If you're interested, its source code can be found here: https://github.com/yuvalo/demo-crm
+- And today, you are going to use the publicly available Docker image: `pwstaging/demo-crm:latest`
+
+Tasks:
+- Write your own Deployment YAML manifest. One replica shall be enough.
+- Write your own Service YAML manifest. Expose it internally using a ClusterIP.
+- Write your own Ingress YAML manifestm to expose the application _externally_.
+- Add resource requests to the CRM deployment.
+
+Tips:
+- The resource request values may be arbritrary (for the sake of the exercise), but they should make some basic sense.
+
+
+## Stage 2
+Goals:
+- Add a high-availability Mongo database (via a Helm Chart).
+- Make sure the database is not exposed outward/publically.
+- Configure the CRM application to use the database.
+
+Tasks:
+- Install MongoDB from a public Helm Chart.
+- Use values to make sure that you are running with three mongo replicas.
+- Use values to make sure that you are running with persistence.
+- Make sure that the MongoDB has authentication enabled.
+- Update the application to use these credentials.
+
+Tips:
+- Store your specific custom values (overrides) for the MongoDB chart in a separate YAML file.
+- Use the official Mongo documentation to understand about configuring its *Connection String*s.
+- Don't get confused with *Kuberenetes ReplicaSets* and *MongoDB Replicas Sets*.
+- You may use either 3 replicas with a StatefulSet or 2 replicas with 1 *Arbiter*.
+- An example configuration of the application can be found in the `.env.local.example` file in its git repository.
+
+
+## Stage 3
+Goals:
+- Purge database nightly.
+- Reimplement CRM application as a Helm chart.
+
+Tasks:
+- Add a CronJob that purges all MongoDB entries (CRM users) every midnight - "we want to start the day with clean DB!".
+- Wrote a Helm chart for the CRM application. Extract every *reasonable* variable you can into the `values.yaml`!
+- Configure MongoDB to be a *dependency chart* in Demo CRM's `Chart.yaml`.
+
+Tips:
+- Finish adding the CronJob before moving on to creating the Helm chart.
+- A few examples of useful values to include in your `values.yaml`:
+  - Number of replicas.
+  - Database authentication details.
+  - Application configuration values.
+  - If the create/enable an Ingress resource or not.
+  - CronJob schedule; and if to create it at all or not.
+- For "inspiration", look at how popular/major/official charts' `values.yaml` are organized, and some of the variables they allow.

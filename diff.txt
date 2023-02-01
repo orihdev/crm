@@ -1,0 +1,27 @@
+1c1,6
+< # CRM (Customer relationship management) - demo application
+---
+> # CRM (Customer relationship management) - demo application - Additional tasks
+> 
+> ## Stage 0
+> Tips:
+> - Use the `diff -y` command to see what I added to these instructions.
+> 
+4c9,12
+< Goals: Deploy the web application - "CRM" and expose it to the internet.
+---
+> Goals:
+> - Provision a Kubernetes cluster in the cloud (AWS EKS or GCP GKE).
+> - Install an _Ingress Controller_ to your cluster (we **strongly** recommend the Nginx one), put it in its own namespace "ingress".
+> - Deploy the web application - "CRM" and expose it to the internet using an Ingress _resource_.
+14c22,23
+< - Write your own Service YAML manifest. Expose externally using a LoadBalancer with port 80 (or a NodePort, if your cluster doesn't allow).
+---
+> - Write your own Service YAML manifest. Expose it internally using a ClusterIP.
+> - Write your own Ingress YAML manifestm to expose the application _externally_.
+34a44
+> - Store your specific custom values (overrides) for the MongoDB chart in a separate YAML file.
+37a48
+> - An example configuration of the application can be found in the `.env.local.example` file in its git repository.
+55a67
+>   - If the create/enable an Ingress resource or not.
